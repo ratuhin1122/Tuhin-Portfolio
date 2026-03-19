@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { World } from "@/components/ui/globe";
+import dynamic from "next/dynamic";
 import { IconMail, IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
+
+// The globe relies heavily on browser APIs (Canvas, WebGL, Window). Loading it on the Next.js SSR server causes fatal crashes!
+const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), { ssr: false });
 
 const globeConfig = {
   pointSize: 4,
